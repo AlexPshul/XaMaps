@@ -19,20 +19,5 @@ namespace XaMaps
         {
             InitializeComponent();
         }
-
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-
-            var position = await CrossGeolocator.Current.GetPositionAsync();
-            
-            MapSpan currentCenter = MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude), Distance.FromKilometers(0.5));
-            MapElement.MoveToRegion(currentCenter);
-        }
-
-        private void Button_OnClicked(object sender, EventArgs e)
-        {
-            MapElement.RegionRotation = MapElement.RegionRotation + 90 % 360;
-        }
     }
 }

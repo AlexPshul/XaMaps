@@ -18,7 +18,7 @@ namespace XaMaps.Droid
 
         public XaMapRenderer(Context context) : base(context) { }
 
-        public void OnMapLoaded() => UpdateDriverLocation();
+        public void OnMapLoaded() => _xamap.InitializeCurrentLocation();
 
         protected override void OnElementChanged(ElementChangedEventArgs<Map> e)
         {
@@ -54,7 +54,7 @@ namespace XaMaps.Droid
         {
             LatLng currentPosition = new LatLng(_xamap.CurrentLocation.Latitude, _xamap.CurrentLocation.Longitude);
             CameraPosition newPosition = new CameraPosition(
-                currentPosition, NativeMap.CameraPosition.Zoom, NativeMap.CameraPosition.Tilt, (float) _xamap.Bearing);
+                currentPosition, 18, NativeMap.CameraPosition.Tilt, (float) _xamap.Bearing);
 
             CameraUpdate rotationUpdate = CameraUpdateFactory.NewCameraPosition(newPosition);
             NativeMap.AnimateCamera(rotationUpdate, 250, null);

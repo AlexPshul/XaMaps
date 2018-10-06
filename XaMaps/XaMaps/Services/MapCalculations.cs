@@ -17,6 +17,7 @@ namespace XaMaps.Services
 
         public static double ToRad(double degrees)
         {
+            
             return degrees * (Math.PI / 180);
         }
 

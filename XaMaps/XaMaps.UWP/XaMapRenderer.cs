@@ -22,10 +22,24 @@ namespace XaMaps.UWP
         {
             base.OnElementChanged(e);
 
+            _xamap = e.NewElement as XaMap;
+
+            Control.Language = "en";
+
+            Control.LoadingStatusChanged -= OnFirstLoadingChange;
+            Control.LoadingStatusChanged += OnFirstLoadingChange;
+
             Control.MapTapped -= SetCurrentLocation;
             Control.MapTapped += SetCurrentLocation;
+        }
 
-            _xamap = e.NewElement as XaMap;
+        private void OnFirstLoadingChange(MapControl sender, object args)
+        {
+            if (sender.LoadingStatus == MapLoadingStatus.Loaded)
+            {
+                Control.LoadingStatusChanged -= OnFirstLoadingChange;
+                _xamap.InitializeCurrentLocation();
+            }
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -35,7 +49,7 @@ namespace XaMaps.UWP
                 return;
 
             Geopoint geopoint = new Geopoint(new BasicGeoposition { Latitude = _xamap.CurrentLocation.Latitude, Longitude = _xamap.CurrentLocation.Longitude });
-            var trySetViewAsync = Control.TrySetViewAsync(geopoint, Control.ZoomLevel, _xamap.Bearing, 0);
+            var trySetViewAsync = Control.TrySetViewAsync(geopoint, 18, _xamap.Bearing, 0);
         }
 
         private void SetCurrentLocation(MapControl sender, MapInputEventArgs args)

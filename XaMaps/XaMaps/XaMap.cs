@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Plugin.Geolocator;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
@@ -10,8 +11,6 @@ namespace XaMaps
 {
     public class XaMap : Map
     {
-        #region Bindable Properties
-
         public double Bearing { get; private set; }
 
         public Position CurrentLocation
@@ -27,25 +26,10 @@ namespace XaMaps
         public static readonly BindableProperty CurrentLocationProperty =
             BindableProperty.Create(nameof(CurrentLocation), typeof(Position), typeof(XaMap), new Position());
 
-        #endregion
-
-        #region Constructors
-
-        public XaMap()
-        {
-            InitializeCurrentLocation();
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private async void InitializeCurrentLocation()
+        public async void InitializeCurrentLocation()
         {
             var position = await CrossGeolocator.Current.GetPositionAsync();
-            CurrentLocation = new Position(position.Latitude, position.Longitude);
+            SetValue(CurrentLocationProperty, new Position(position.Latitude, position.Longitude));
         }
-
-        #endregion
     }
 }

@@ -11,9 +11,9 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Position = Xamarin.Forms.Maps.Position;
 
-namespace XaMaps
+namespace XaMaps.Views
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : MasterDetailPage
     {
         public MainPage()
         {

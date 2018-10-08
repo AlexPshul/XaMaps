@@ -7,7 +7,7 @@
         <converters:MetersToKmConverter x:Key="MetersToKmConverter"/>
     </ContentView.Resources>
 
-    <Grid>
+    <Grid BackgroundColor="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -16,9 +16,12 @@
         <SearchBar x:Name="AddressSearchBar"
                Placeholder="Where to?"
                SearchCommand="{Binding SearchAddressCommand}"
-               SearchCommandParameter="{Binding Source={x:Reference Name=AddressSearchBar}, Path=Text}"
-               HeightRequest="25"/>
-        <ListView ItemsSource="{Binding Results}" HasUnevenRows="True" Grid.Row="1">
+               SearchCommandParameter="{Binding Source={x:Reference Name=AddressSearchBar}, Path=Text}"/>
+        <ListView ItemsSource="{Binding Results}" 
+                  SelectedItem="{Binding }"
+                  HasUnevenRows="True" 
+                  Grid.Row="1" 
+                  BackgroundColor="White">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -40,7 +43,10 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ActivityIndicator HeightRequest="15" WidthRequest="15" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" BackgroundColor="#A0ffffff"
+        <ActivityIndicator HeightRequest="45" WidthRequest="45" 
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" BackgroundColor="#A0ffffff"
                            Grid.Row="0" Grid.RowSpan="2"/>
     </Grid>
 

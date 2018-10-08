@@ -15,21 +15,13 @@ namespace XaMaps.Services
             return ToBearing(Math.Atan2(dLon, dPhi));
         }
 
-        public static double ToRad(double degrees)
-        {
-            
-            return degrees * (Math.PI / 180);
-        }
-
-        public static double ToDegrees(double radians)
-        {
-            return radians * 180 / Math.PI;
-        }
-
-        public static double ToBearing(double radians)
-        {
-            // convert radians to degrees (as bearing: 0...360)
-            return (ToDegrees(radians) + 360) % 360;
-        }
+        /// <summary>
+        /// Convert radians to degrees (as bearing: 0...360)
+        /// </summary>
+        /// <param name="radians"></param>
+        /// <returns></returns>
+        public static double ToBearing(double radians) => (ToDegrees(radians) + 360) % 360;
+        public static double ToRad(double degrees) => degrees * (Math.PI / 180);
+        public static double ToDegrees(double radians) => radians * 180 / Math.PI;
     }
 }

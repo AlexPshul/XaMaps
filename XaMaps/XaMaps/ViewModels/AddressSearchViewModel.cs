@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -24,7 +25,18 @@ namespace XaMaps.ViewModels
             get => _results;
             set => Set(ref _results, value);
         }
-        
+
+        private SearchResultViewModel _selectedResult;
+        public SearchResultViewModel SelectedResult
+        {
+            get => _selectedResult;
+            set
+            {
+                Set(ref _selectedResult, value);
+                NavigationService.SelectedRoute = value.Directions.Routes.FirstOrDefault();
+            }
+        }
+
         public ICommand SearchAddressCommand { get;}
 
         public AddressSearchViewModel()
@@ -36,6 +48,8 @@ namespace XaMaps.ViewModels
         {
             if (string.IsNullOrEmpty(query))
                 return;
+
+            Results = Array.Empty<SearchResultViewModel>();
 
             IsBusy = true;
 

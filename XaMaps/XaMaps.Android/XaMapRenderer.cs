@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps.Android;
 using XaMaps;
@@ -6,8 +8,12 @@ using XaMaps.Droid;
 using Android.Content;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using Android.Provider;
+using Java.Lang;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Platform.Android;
+using Color = Android.Graphics.Color;
+using Point = XaMaps.Models.Point;
 
 [assembly: ExportRenderer(typeof(XaMap), typeof(XaMapRenderer))]
 namespace XaMaps.Droid
@@ -39,10 +45,13 @@ namespace XaMaps.Droid
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-            if (_xamap == null || NativeMap == null || e.PropertyName != nameof(XaMap.CurrentLocation))
+            if (_xamap == null || NativeMap == null)
                 return;
 
-            UpdateDriverLocation();
+            if (e.PropertyName == nameof(XaMap.CurrentLocation))
+                UpdateDriverLocation();
+            else if (e.PropertyName == nameof(XaMap.SelectedRoute))
+                ShowRouteOverview();
         }
 
         private void SetCurrentLocation(object sender, GoogleMap.MapClickEventArgs e)
@@ -58,6 +67,23 @@ namespace XaMaps.Droid
 
             CameraUpdate rotationUpdate = CameraUpdateFactory.NewCameraPosition(newPosition);
             NativeMap.AnimateCamera(rotationUpdate, 250, null);
+        }
+
+        private void ShowRouteOverview()
+        {
+            NativeMap.Clear();
+
+            PolylineOptions selectedRoutePolyline = new PolylineOptions();
+            selectedRoutePolyline.InvokeColor(Resource.Color.colorPrimaryDark);
+            selectedRoutePolyline.InvokeWidth(20f);
+
+            LatLng[] allRoutePoints = _xamap.SelectedRoute.Legs
+                .SelectMany(leg => leg.Points)
+                .Select(point => new LatLng(point.Latitude, point.Longitude))
+                .ToArray();
+
+            selectedRoutePolyline.Add(allRoutePoints);
+            NativeMap.AddPolyline(selectedRoutePolyline);
         }
     }
 }

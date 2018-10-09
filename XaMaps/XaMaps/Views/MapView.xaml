@@ -5,7 +5,8 @@
              Title="XaMap"
              x:Class="XaMaps.Views.MapView">
     <Grid x:Name="MainLayout">
-        <xaMaps:XaMap x:Name="MapElement" MapType="Street"/>
+        <xaMaps:XaMap x:Name="MapElement" MapType="Street"
+                      SelectedRoute="{Binding SelectedRoute, Mode=TwoWay}"/>
         <Image HorizontalOptions="Center" VerticalOptions="Center"
                Source="driver.png"
                InputTransparent="True"/>

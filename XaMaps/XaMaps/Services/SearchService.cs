@@ -34,7 +34,7 @@ namespace XaMaps.Services
             string combinedDestinations = string.Join(":",positions.Select(PositionToString));
 
             string queryString = $"{initialLocationString}:{combinedDestinations}";
-            HttpResponseMessage response = await MapsHttpClient.GetAsync($"route/directions/{MapsConsts.RequiredParameters}&query={queryString}");
+            HttpResponseMessage response = await MapsHttpClient.GetAsync($"route/directions/{MapsConsts.RequiredParameters}&instructionsType=text&routeType=fastest&query={queryString}");
 
             return await ConvertResponseToObject<RouteDirectionsResult>(response);
         }

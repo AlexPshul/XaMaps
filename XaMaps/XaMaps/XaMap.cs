@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Plugin.Geolocator;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
+using XaMaps.Models;
 using XaMaps.Services;
+using Position = Xamarin.Forms.Maps.Position;
 
 namespace XaMaps
 {
@@ -13,9 +15,10 @@ namespace XaMaps
     {
         public double Bearing { get; private set; }
 
+
         public Position CurrentLocation
         {
-            get => (Position)GetValue(CurrentLocationProperty);
+            get => (Position) GetValue(CurrentLocationProperty);
             set
             {
                 Bearing = MapCalculations.DegreeBearing(CurrentLocation, value);
@@ -25,6 +28,22 @@ namespace XaMaps
 
         public static readonly BindableProperty CurrentLocationProperty =
             BindableProperty.Create(nameof(CurrentLocation), typeof(Position), typeof(XaMap), new Position());
+
+
+        public Route SelectedRoute
+        {
+            get => (Route) GetValue(SelectedRouteProperty);
+            set => SetValue(SelectedRouteProperty, value);
+        }
+
+        public static readonly BindableProperty SelectedRouteProperty = 
+            BindableProperty.Create(nameof(SelectedRoute), typeof(Route), typeof(XaMap), null, propertyChanged: PropertyChangedCallback);
+
+        private static void PropertyChangedCallback(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            
+        }
+
 
         public async void InitializeCurrentLocation()
         {

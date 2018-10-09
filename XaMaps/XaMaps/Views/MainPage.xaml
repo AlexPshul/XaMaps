@@ -2,26 +2,17 @@
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                   xmlns:local="clr-namespace:XaMaps.Views"
-                  xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
-                  xmlns:viewModels="clr-namespace:XaMaps.ViewModels;assembly=XaMaps"
                   MasterBehavior="Popover"
+                  IsPresented="{Binding IsSearchPresented, Mode=TwoWay}"
                   x:Class="XaMaps.Views.MainPage">
 
     <MasterDetailPage.Master>
-        <local:SearchPaneView>
-            <local:SearchPaneView.BindingContext>
-                <viewModels:SearchPaneViewModel/>
-            </local:SearchPaneView.BindingContext>
-        </local:SearchPaneView>
+        <local:SearchPaneView BindingContext="{Binding SearchPaneViewModel}"/>
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
         <NavigationPage>
             <x:Arguments>
-                <local:MapView>
-                    <local:MapView.BindingContext>
-                        <viewModels:MapViewModel/>
-                    </local:MapView.BindingContext>
-                </local:MapView>
+                <local:MapView BindingContext="{Binding MapViewModel}"/>
             </x:Arguments>
         </NavigationPage>
     </MasterDetailPage.Detail>

@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XaMaps.ViewModels;
 using XaMaps.Views;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -12,7 +13,7 @@ namespace XaMaps
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new MainPage { BindingContext = new MainViewModel() };
         }
 
         protected override void OnStart()

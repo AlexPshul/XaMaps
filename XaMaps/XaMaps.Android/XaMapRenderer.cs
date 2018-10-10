@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps.Android;
@@ -8,12 +7,8 @@ using XaMaps.Droid;
 using Android.Content;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
-using Android.Provider;
-using Java.Lang;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Platform.Android;
-using Color = Android.Graphics.Color;
-using Point = XaMaps.Models.Point;
 
 [assembly: ExportRenderer(typeof(XaMap), typeof(XaMapRenderer))]
 namespace XaMaps.Droid
@@ -84,6 +79,14 @@ namespace XaMaps.Droid
 
             selectedRoutePolyline.Add(allRoutePoints);
             NativeMap.AddPolyline(selectedRoutePolyline);
+
+            LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
+            LatLngBounds routeBounds = allRoutePoints
+                .Aggregate(boundsBuilder, (builder, latLng) => builder.Include(latLng))
+                .Build();
+
+            CameraUpdate routeOverviewMapUpdate = CameraUpdateFactory.NewLatLngBounds(routeBounds, 50);
+            NativeMap.AnimateCamera(routeOverviewMapUpdate);
         }
     }
 }

@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:converters="clr-namespace:XaMaps.Converters;assembly=XaMaps"
+             x:Class="XaMaps.Views.ActionPanelView">
+    
+    <ContentView.Resources>
+        
+        <converters:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
+
+        <Style x:Key="RoundButton" TargetType="Button">
+            <Setter Property="WidthRequest" Value="75"/>
+            <Setter Property="HeightRequest" Value="75"/>
+            <Setter Property="CornerRadius" Value="37"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="53"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="FontFamily">
+                <Setter.Value>
+                    <OnPlatform x:TypeArguments="system:String">
+                        <OnPlatform.Platforms>
+                            <On Platform="Android" Value="fa-solid-900.ttf#Font Awesome 5 Free Solid"/>
+                            <On Platform="UWP" Value="ms-appx:///Assets/fa-solid-900.ttf#Font Awesome 5 Free Solid"/>
+                        </OnPlatform.Platforms>
+                    </OnPlatform>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Text="Turn Left" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+        <Button Grid.Column="0" Style="{StaticResource RoundButton}"
+                Command="{Binding StartNavigationCommand}" 
+                Text="&#xf144;"
+                TextColor="Green"
+                IsEnabled="{Binding SelectedRoute, Converter={StaticResource NullVisibilityConverter}}">
+            <Button.Triggers>
+                <DataTrigger Binding="{Binding IsVisible, Source={x:Reference StopNavigationButton}}" Value="True" TargetType="Button">
+                    <Setter Property="IsVisible" Value="False"/>
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
+
+        <Button x:Name="StopNavigationButton"
+                Grid.Column="0" Style="{StaticResource RoundButton}"
+                Command="{Binding StopNavigationCommand}"
+                Text="&#xf28d;"
+                TextColor="Red"
+                IsVisible="{Binding IsNavigating}"/>
+
+    </Grid>
+
+</ContentView>

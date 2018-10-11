@@ -12,6 +12,8 @@ namespace XaMaps.ViewModels
             set => Set(ref _selectedRoute, value);
         }
 
+        public ActionPanelViewModel ActionPanelViewModel { get; } = new ActionPanelViewModel();
+
         public MapViewModel()
         {
             NavigationService.SelectedRouteChanged += route => SelectedRoute = route;

@@ -9,12 +9,18 @@
         
         <converters:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
 
-        <Style x:Key="RoundButton" TargetType="Button">
-            <Setter Property="WidthRequest" Value="75"/>
-            <Setter Property="HeightRequest" Value="75"/>
-            <Setter Property="CornerRadius" Value="37"/>
+        <Style x:Key="ButtonLabel" TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
             <Setter Property="Margin" Value="5"/>
-            <Setter Property="FontSize" Value="53"/>
+            <Setter Property="FontSize">
+                <Setter.Value>
+                    <OnPlatform x:TypeArguments="system:Double">
+                        <On Platform="Android" Value="50"/>
+                        <On Platform="UWP" Value="70"/>
+                    </OnPlatform>
+                </Setter.Value>
+            </Setter>
             <Setter Property="FontAttributes" Value="Bold"/>
             <Setter Property="FontFamily">
                 <Setter.Value>
@@ -27,6 +33,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
     </ContentView.Resources>
 
     <Grid>
@@ -38,24 +45,31 @@
 
         <Label Text="Turn Left" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
 
-        <Button Grid.Column="0" Style="{StaticResource RoundButton}"
-                Command="{Binding StartNavigationCommand}" 
-                Text="&#xf144;"
-                TextColor="Green"
-                IsEnabled="{Binding SelectedRoute, Converter={StaticResource NullVisibilityConverter}}">
-            <Button.Triggers>
-                <DataTrigger Binding="{Binding IsVisible, Source={x:Reference StopNavigationButton}}" Value="True" TargetType="Button">
+        <Label Grid.Column="0" Style="{StaticResource ButtonLabel}"
+               Text="&#xf144;" TextColor="Green"
+               IsEnabled="{Binding SelectedRoute, Converter={StaticResource NullVisibilityConverter}}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding StartNavigationCommand}"/>
+            </Label.GestureRecognizers>
+            <Label.Triggers>
+                <DataTrigger Binding="{Binding IsVisible, Source={x:Reference StopNavigationButton}}" Value="True" TargetType="Label">
                     <Setter Property="IsVisible" Value="False"/>
                 </DataTrigger>
-            </Button.Triggers>
-        </Button>
+                <Trigger Property="IsEnabled" Value="False" TargetType="Label">
+                    <Setter Property="TextColor" Value="Gray"/>
+                </Trigger>
+            </Label.Triggers>
+        </Label>
 
-        <Button x:Name="StopNavigationButton"
-                Grid.Column="0" Style="{StaticResource RoundButton}"
-                Command="{Binding StopNavigationCommand}"
-                Text="&#xf28d;"
-                TextColor="Red"
-                IsVisible="{Binding IsNavigating}"/>
+        <Label x:Name="StopNavigationButton"
+               Grid.Column="0" Style="{StaticResource ButtonLabel}"
+               Text="&#xf28d;"
+               TextColor="Red"
+               IsVisible="{Binding IsNavigating}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding StopNavigationCommand}"/>
+            </Label.GestureRecognizers>
+        </Label>
 
     </Grid>
 

@@ -3,8 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xaMaps="clr-namespace:XaMaps;assembly=XaMaps"
              xmlns:views="clr-namespace:XaMaps.Views;assembly=XaMaps"
+             xmlns:converters="clr-namespace:XaMaps.Converters;assembly=XaMaps"
              Title="XaMap"
              x:Class="XaMaps.Views.MapView">
+    
+    <ContentPage.Resources>
+        <converters:BooleanToInvertBooleanConverter x:Key="BooleanToInvertBooleanConverter"/>
+    </ContentPage.Resources>
+
     <Grid x:Name="MainLayout">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,11 +21,12 @@
 
         <xaMaps:XaMap x:Name="MapElement" MapType="Street"
                       SelectedRoute="{Binding SelectedRoute, Mode=TwoWay}"
-                      Grid.Row="1"/>
+                      Grid.Row="1" IsShowingUser="{Binding ActionPanelViewModel.IsNavigating, Converter={StaticResource BooleanToInvertBooleanConverter}}"/>
         <Image HorizontalOptions="Center" VerticalOptions="Center"
                Source="driver.png"
                InputTransparent="True"
-               Grid.Row="1"/>
+               Grid.Row="1"
+               IsVisible="{Binding ActionPanelViewModel.IsNavigating}"/>
         
         
 

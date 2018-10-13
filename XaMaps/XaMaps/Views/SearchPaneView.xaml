@@ -7,6 +7,7 @@
              x:Class="XaMaps.Views.SearchPaneView">
     <ContentPage.Resources>
         <converters:MetersToKmConverter x:Key="MetersToKmConverter"/>
+        <converters:FuzzyResultToTextConverter x:Key="FuzzyResultToTextConverter"/>
     </ContentPage.Resources>
 
     <Grid BackgroundColor="White">
@@ -32,13 +33,18 @@
                                 <RowDefinition Height="3*"/>
                                 <RowDefinition Height="2*"/>
                             </Grid.RowDefinitions>
-                            <Label Text="{Binding FuzzyResult.Address.FreeformAddress}" FontAttributes="Bold" FontSize="20" Grid.Row="0"/>
-                            <Label Text="{Binding Directions.Routes[0].Summary.LengthInMeters, Converter={StaticResource MetersToKmConverter}, StringFormat='{}{0} Km'}"
-                                   Grid.Row="0" HorizontalOptions="End" Grid.RowSpan="2" VerticalOptions="End"/>
-                            <StackLayout Grid.Row="1" Orientation="Horizontal" Spacing="10" VerticalOptions="Start">
-                                <Label Text="{Binding FuzzyResult.Address.Country}" FontAttributes="Bold"/>
-                                <Label Text="{Binding FuzzyResult.Address.Municipality}" />
-                            </StackLayout>
+                            <Label Text="{Binding FuzzyResult, Converter={StaticResource FuzzyResultToTextConverter}}" FontAttributes="Bold" FontSize="20" Grid.Row="0"/>
+                            <Grid ColumnSpacing="10" Grid.Row="1" VerticalOptions="Start">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding FuzzyResult.Address.Country}" FontAttributes="Bold"/>
+                                <Label Grid.Column="1" Text="{Binding FuzzyResult.Address.Municipality}" />
+                                <Label Text="{Binding Directions.Routes[0].Summary.LengthInMeters, Converter={StaticResource MetersToKmConverter}, StringFormat='{}{0} Km'}"
+                                       Grid.Column="2" HorizontalOptions="End" VerticalOptions="End"/>
+                            </Grid>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

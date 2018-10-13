@@ -30,10 +30,6 @@ namespace XaMaps.Droid
         protected override void OnMapReady(GoogleMap map)
         {
             base.OnMapReady(map);
-
-            NativeMap.MapClick -= SetCurrentLocation;
-            NativeMap.MapClick += SetCurrentLocation;
-
             NativeMap.SetOnMapLoadedCallback(this);
         }
 
@@ -48,12 +44,7 @@ namespace XaMaps.Droid
             else if (e.PropertyName == nameof(XaMap.SelectedRoute))
                 ShowRouteOverview();
         }
-
-        private void SetCurrentLocation(object sender, GoogleMap.MapClickEventArgs e)
-        {
-            _xamap.CurrentLocation = new Position(e.Point.Latitude, e.Point.Longitude);
-        }
-
+        
         private void UpdateDriverLocation()
         {
             LatLng currentPosition = new LatLng(_xamap.CurrentLocation.Latitude, _xamap.CurrentLocation.Longitude);
@@ -61,7 +52,7 @@ namespace XaMaps.Droid
                 currentPosition, 18, NativeMap.CameraPosition.Tilt, (float) _xamap.Bearing);
 
             CameraUpdate rotationUpdate = CameraUpdateFactory.NewCameraPosition(newPosition);
-            NativeMap.AnimateCamera(rotationUpdate, 250, null);
+            NativeMap.AnimateCamera(rotationUpdate, 300, null);
         }
 
         private void ShowRouteOverview()

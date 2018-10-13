@@ -21,8 +21,8 @@ namespace XaMaps.ViewModels
             set => Set(ref _selectedRoute, value);
         }
 
-        public ICommand StartNavigationCommand { get; } = new Command(() => NavigationService.IsNavigating = true);
-        public ICommand StopNavigationCommand { get; } = new Command(() => NavigationService.IsNavigating = false);
+        public ICommand StartNavigationCommand { get; } = new Command(NavigationService.StartNavigating);
+        public ICommand StopNavigationCommand { get; } = new Command(NavigationService.StopNavigating);
 
         public ActionPanelViewModel()
         {

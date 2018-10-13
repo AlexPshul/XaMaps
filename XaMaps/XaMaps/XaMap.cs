@@ -37,11 +37,12 @@ namespace XaMaps
         }
 
         public static readonly BindableProperty SelectedRouteProperty = 
-            BindableProperty.Create(nameof(SelectedRoute), typeof(Route), typeof(XaMap), null, propertyChanged: PropertyChangedCallback);
+            BindableProperty.Create(nameof(SelectedRoute), typeof(Route), typeof(XaMap), null);
 
-        private static void PropertyChangedCallback(BindableObject bindable, object oldvalue, object newvalue)
+
+        public XaMap()
         {
-            
+            NavigationService.NavigatedToLocation += newPosition => CurrentLocation = newPosition;
         }
 
 

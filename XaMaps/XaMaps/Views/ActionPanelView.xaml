@@ -8,6 +8,23 @@
     <ContentView.Resources>
         
         <converters:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
+        <converters:ManeuverNameToImageConverter x:Key="ManeuverNameToImageConverter"/>
+        <converters:DistanceToReadableTextConverter x:Key="DistanceToReadableTextConverter"/>
+
+        <Style x:Key="ManeuverImageStyle" TargetType="Image">
+            <Setter Property="WidthRequest">
+                <OnPlatform x:TypeArguments="system:Double">
+                    <On Platform="Android" Value="60"/>
+                    <On Platform="UWP" Value="75"/>
+                </OnPlatform>
+            </Setter>
+            <Setter Property="HeightRequest">
+                <OnPlatform x:TypeArguments="system:Double">
+                    <On Platform="Android" Value="60"/>
+                    <On Platform="UWP" Value="75"/>
+                </OnPlatform>
+            </Setter>
+        </Style>
 
         <Style x:Key="ButtonLabel" TargetType="Label">
             <Setter Property="HorizontalOptions" Value="Center"/>
@@ -43,8 +60,6 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Label Text="Turn Left" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
-
         <Label Grid.Column="0" Style="{StaticResource ButtonLabel}"
                Text="&#xf144;" TextColor="Green"
                IsEnabled="{Binding SelectedRoute, Converter={StaticResource NullVisibilityConverter}}">
@@ -70,6 +85,17 @@
                 <TapGestureRecognizer Command="{Binding StopNavigationCommand}"/>
             </Label.GestureRecognizers>
         </Label>
+
+        <Label Text="{Binding NextInstruction.Message}" FontSize="20"
+               IsVisible="{Binding IsNavigating}"
+               Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+        <StackLayout Grid.Column="2" Spacing="0" IsVisible="{Binding IsNavigating}" Margin="2, 0">
+            <Image Style="{StaticResource ManeuverImageStyle}"
+                   Source="{Binding NextInstruction.Maneuver, Converter={StaticResource ManeuverNameToImageConverter}}"
+                   Aspect="AspectFit"/>
+            <Label FontSize="24" FontAttributes="Bold" Text="{Binding MetersToNextManeuver, Converter={StaticResource DistanceToReadableTextConverter}}"/>
+        </StackLayout>
 
     </Grid>
 

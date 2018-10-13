@@ -10,6 +10,60 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Maneuvers\arrive.png" />
+    <None Remove="Maneuvers\arrive_left.png" />
+    <None Remove="Maneuvers\arrive_right.png" />
+    <None Remove="Maneuvers\bear_left.png" />
+    <None Remove="Maneuvers\bear_right.png" />
+    <None Remove="Maneuvers\generic.png" />
+    <None Remove="Maneuvers\keep_left.png" />
+    <None Remove="Maneuvers\keep_right.png" />
+    <None Remove="Maneuvers\make_uturn.png" />
+    <None Remove="Maneuvers\motorway_exit_left.png" />
+    <None Remove="Maneuvers\motorway_exit_right.png" />
+    <None Remove="Maneuvers\roundabout_back.png" />
+    <None Remove="Maneuvers\roundabout_cross.png" />
+    <None Remove="Maneuvers\roundabout_left.png" />
+    <None Remove="Maneuvers\roundabout_right.png" />
+    <None Remove="Maneuvers\sharp_left.png" />
+    <None Remove="Maneuvers\sharp_right.png" />
+    <None Remove="Maneuvers\straight.png" />
+    <None Remove="Maneuvers\try_make_uturn.png" />
+    <None Remove="Maneuvers\turn_left.png" />
+    <None Remove="Maneuvers\turn_right.png" />
+    <None Remove="Maneuvers\waypoint_left.png" />
+    <None Remove="Maneuvers\waypoint_reached.png" />
+    <None Remove="Maneuvers\waypoint_right.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Maneuvers\arrive.png" />
+    <EmbeddedResource Include="Maneuvers\arrive_left.png" />
+    <EmbeddedResource Include="Maneuvers\arrive_right.png" />
+    <EmbeddedResource Include="Maneuvers\bear_left.png" />
+    <EmbeddedResource Include="Maneuvers\bear_right.png" />
+    <EmbeddedResource Include="Maneuvers\generic.png" />
+    <EmbeddedResource Include="Maneuvers\keep_left.png" />
+    <EmbeddedResource Include="Maneuvers\keep_right.png" />
+    <EmbeddedResource Include="Maneuvers\make_uturn.png" />
+    <EmbeddedResource Include="Maneuvers\motorway_exit_left.png" />
+    <EmbeddedResource Include="Maneuvers\motorway_exit_right.png" />
+    <EmbeddedResource Include="Maneuvers\roundabout_back.png" />
+    <EmbeddedResource Include="Maneuvers\roundabout_cross.png" />
+    <EmbeddedResource Include="Maneuvers\roundabout_left.png" />
+    <EmbeddedResource Include="Maneuvers\roundabout_right.png" />
+    <EmbeddedResource Include="Maneuvers\sharp_left.png" />
+    <EmbeddedResource Include="Maneuvers\sharp_right.png" />
+    <EmbeddedResource Include="Maneuvers\straight.png" />
+    <EmbeddedResource Include="Maneuvers\try_make_uturn.png" />
+    <EmbeddedResource Include="Maneuvers\turn_left.png" />
+    <EmbeddedResource Include="Maneuvers\turn_right.png" />
+    <EmbeddedResource Include="Maneuvers\waypoint_left.png" />
+    <EmbeddedResource Include="Maneuvers\waypoint_reached.png" />
+    <EmbeddedResource Include="Maneuvers\waypoint_right.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="GeoCoordinate" Version="2.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />

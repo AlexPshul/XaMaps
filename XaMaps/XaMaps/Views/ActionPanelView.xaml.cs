@@ -9,12 +9,12 @@ using Xamarin.Forms.Xaml;
 
 namespace XaMaps.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ActionPanelView : ContentView
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ActionPanelView : ContentView
     {
-		public ActionPanelView ()
-		{
-			InitializeComponent ();
-		}
-	}
+        public ActionPanelView()
+        {
+            InitializeComponent();
+        }
+    }
 }

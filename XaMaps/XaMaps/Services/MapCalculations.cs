@@ -45,6 +45,21 @@ namespace XaMaps.Services
         public static double ToRad(double degrees) => degrees * (Math.PI / 180);
         public static double ToDegrees(double radians) => radians * 180 / Math.PI;
 
+        public static double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2)
+        {
+            var R = 6371d; // Radius of the earth in km
+            var dLat = ToRad(lat2 - lat1);  // deg2rad below
+            var dLon = ToRad(lon2 - lon1);
+            var a =
+                Math.Sin(dLat / 2d) * Math.Sin(dLat / 2d) +
+                Math.Cos(ToRad(lat1)) * Math.Cos(ToRad(lat2)) *
+                Math.Sin(dLon / 2d) * Math.Sin(dLon / 2d);
+            var c = 2d * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1d - a));
+            var d = R * c; // Distance in km
+
+            return d;
+        }
+
         private static Position FindPointAtDistanceFrom(Position startPoint, double initialBearingDegrees, double distanceKilometres)
         {
             const double radiusEarthKilometres = 6371.01;
@@ -67,21 +82,6 @@ namespace XaMaps.Services
                                  distRatioCosine - startLatSin * Math.Sin(endLatRads));
 
             return new Position(ToDegrees(endLatRads), ToDegrees(endLonRads));
-        }
-
-        private static double GetDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2)
-        {
-            var R = 6371d; // Radius of the earth in km
-            var dLat = ToRad(lat2 - lat1);  // deg2rad below
-            var dLon = ToRad(lon2 - lon1);
-            var a =
-                Math.Sin(dLat / 2d) * Math.Sin(dLat / 2d) +
-                Math.Cos(ToRad(lat1)) * Math.Cos(ToRad(lat2)) *
-                Math.Sin(dLon / 2d) * Math.Sin(dLon / 2d);
-            var c = 2d * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1d - a));
-            var d = R * c; // Distance in km
-
-            return d;
         }
     }
 }

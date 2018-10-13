@@ -66,8 +66,8 @@ namespace XaMaps.ViewModels
             if (_nextInstructionIndex + 1 == SelectedRoute.Guidance.Instructions.Count)
                 return;
 
-            if (newPosition.Latitude.Equals(NextInstruction.Point.Latitude) &&
-                newPosition.Longitude.Equals(NextInstruction.Point.Longitude))
+            if (Math.Abs(newPosition.Latitude - NextInstruction.Point.Latitude) < 0.0001 &&
+                Math.Abs(newPosition.Longitude - NextInstruction.Point.Longitude) < 0.0001)
             {
                 _nextInstructionIndex++;
                 NextInstruction = SelectedRoute.Guidance.Instructions[_nextInstructionIndex];

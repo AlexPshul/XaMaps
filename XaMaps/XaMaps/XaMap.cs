@@ -43,6 +43,7 @@ namespace XaMaps
         public XaMap()
         {
             NavigationService.NavigatedToLocation += newPosition => CurrentLocation = newPosition;
+            InitializeCurrentLocation();
         }
 
 
@@ -50,6 +51,7 @@ namespace XaMaps
         {
             var position = await CrossGeolocator.Current.GetPositionAsync();
             SetValue(CurrentLocationProperty, new Position(position.Latitude, position.Longitude));
+            MoveToRegion(MapSpan.FromCenterAndRadius(CurrentLocation, Distance.FromKilometers(1)));
         }
     }
 }

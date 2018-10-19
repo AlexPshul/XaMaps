@@ -52,7 +52,7 @@ namespace XaMaps.Droid
                 currentPosition, 18, NativeMap.CameraPosition.Tilt, (float) _xamap.Bearing);
 
             CameraUpdate rotationUpdate = CameraUpdateFactory.NewCameraPosition(newPosition);
-            NativeMap.AnimateCamera(rotationUpdate, 300, null);
+            NativeMap.AnimateCamera(rotationUpdate, 200, null);
         }
 
         private void ShowRouteOverview()

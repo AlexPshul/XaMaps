@@ -60,9 +60,18 @@ namespace XaMaps.ViewModels
 
         private void UpdateInstruction(Position newPosition)
         {
-            // Initialize distance to next Maneuver
+            MetersToNextManeuver = MapCalculations.GetDistanceFromLatLonInKm(
+                                       newPosition.Latitude, newPosition.Longitude, NextInstruction.Point.Latitude, NextInstruction.Point.Longitude) * 1000;
 
-            // Update the current instruction
+            if (_nextInstructionIndex + 1 == SelectedRoute.Guidance.Instructions.Count)
+                return;
+
+            if (Math.Abs(newPosition.Latitude - NextInstruction.Point.Latitude) < 0.0001 &&
+                Math.Abs(newPosition.Longitude - NextInstruction.Point.Longitude) < 0.0001)
+            {
+                _nextInstructionIndex++;
+                NextInstruction = SelectedRoute.Guidance.Instructions[_nextInstructionIndex];
+            }
         }
     }
 }

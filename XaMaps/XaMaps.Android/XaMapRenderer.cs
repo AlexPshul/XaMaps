@@ -47,37 +47,20 @@ namespace XaMaps.Droid
         
         private void UpdateDriverLocation()
         {
-            LatLng currentPosition = new LatLng(_xamap.CurrentLocation.Latitude, _xamap.CurrentLocation.Longitude);
-            CameraPosition newPosition = new CameraPosition(
-                currentPosition, 18, NativeMap.CameraPosition.Tilt, (float) _xamap.Bearing);
-
-            CameraUpdate rotationUpdate = CameraUpdateFactory.NewCameraPosition(newPosition);
-            NativeMap.AnimateCamera(rotationUpdate, 200, null);
+            // Get the driver location and update camera
         }
 
         private void ShowRouteOverview()
         {
-            NativeMap.Clear();
+            // Clear map from previous highlights
 
-            PolylineOptions selectedRoutePolyline = new PolylineOptions();
-            selectedRoutePolyline.InvokeColor(Resource.Color.colorPrimaryDark);
-            selectedRoutePolyline.InvokeWidth(20f);
+            // Create polyline options
 
-            LatLng[] allRoutePoints = _xamap.SelectedRoute.Legs
-                .SelectMany(leg => leg.Points)
-                .Select(point => new LatLng(point.Latitude, point.Longitude))
-                .ToArray();
+            // Calculate all route points
 
-            selectedRoutePolyline.Add(allRoutePoints);
-            NativeMap.AddPolyline(selectedRoutePolyline);
+            // Create a camera update object
 
-            LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
-            LatLngBounds routeBounds = allRoutePoints
-                .Aggregate(boundsBuilder, (builder, latLng) => builder.Include(latLng))
-                .Build();
-
-            CameraUpdate routeOverviewMapUpdate = CameraUpdateFactory.NewLatLngBounds(routeBounds, 50);
-            NativeMap.AnimateCamera(routeOverviewMapUpdate);
+            // Update the map
         }
     }
 }

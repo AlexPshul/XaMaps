@@ -52,28 +52,10 @@ namespace XaMaps.ViewModels
             Results = Array.Empty<SearchResultViewModel>();
 
             IsBusy = true;
-
-            FuzzyResults fuzzyResults = await SearchService.FuzzySearch(query);
-
-            var crossPosition = await CrossGeolocator.Current.GetPositionAsync();
-            Position xaMapPosition = new Position { Lat = crossPosition.Latitude, Lon = crossPosition.Longitude };
-
-            IEnumerable<Task<SearchResultViewModel>> searchRouteTasks =
-                fuzzyResults.Results.Select(result => LoadRoutes(xaMapPosition, result));
-
-            var directionsResults = await Task.WhenAll(searchRouteTasks);
-            Results = directionsResults.Where(result => result != null).ToArray();
+            
+            // Populate the Results array
 
             IsBusy = false;
-        }
-
-        private async Task<SearchResultViewModel> LoadRoutes(Position currentPosition, SingleFuzzyResult fuzzyResult)
-        {
-            RouteDirectionsResult routeDirectionsResult = await SearchService.GetDirections(currentPosition, fuzzyResult.Position);
-
-            return routeDirectionsResult?.Routes?.Length > 0
-                ? new SearchResultViewModel { FuzzyResult = fuzzyResult, Directions = routeDirectionsResult }
-                : null;
         }
     }
 }

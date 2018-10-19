@@ -9,7 +9,7 @@ namespace XaMaps.Services
 {
     public static class SearchService
     {
-        private const string MapsKey = @"ZaJhKJqAOq6cTwNrMipRzKdVNVyMhUXEJjX6ZlB7iGs";
+        private const string MapsKey = @"AZURE MAPS KEY";
         private static readonly string RequiredParameters = $"json?subscription-key={MapsKey}&api-version=1.0";
 
         private static readonly HttpClient MapsHttpClient;

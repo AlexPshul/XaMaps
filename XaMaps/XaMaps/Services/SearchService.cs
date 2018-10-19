@@ -9,6 +9,9 @@ namespace XaMaps.Services
 {
     public static class SearchService
     {
+        private const string MapsKey = @"ZaJhKJqAOq6cTwNrMipRzKdVNVyMhUXEJjX6ZlB7iGs";
+        private static readonly string RequiredParameters = $"json?subscription-key={MapsKey}&api-version=1.0";
+
         private static readonly HttpClient MapsHttpClient;
 
         static SearchService()
@@ -18,7 +21,7 @@ namespace XaMaps.Services
 
         public static async Task<FuzzyResults> FuzzySearch(string searchQuery)
         {
-            HttpResponseMessage response = await MapsHttpClient.GetAsync($"search/fuzzy/{MapsConsts.RequiredParameters}&query={searchQuery}");
+            HttpResponseMessage response = await MapsHttpClient.GetAsync($"search/fuzzy/{RequiredParameters}&query={searchQuery}");
 
             return await ConvertResponseToObject<FuzzyResults>(response);
         }
@@ -34,7 +37,7 @@ namespace XaMaps.Services
             string combinedDestinations = string.Join(":",positions.Select(PositionToString));
 
             string queryString = $"{initialLocationString}:{combinedDestinations}";
-            HttpResponseMessage response = await MapsHttpClient.GetAsync($"route/directions/{MapsConsts.RequiredParameters}&instructionsType=text&routeType=fastest&query={queryString}");
+            HttpResponseMessage response = await MapsHttpClient.GetAsync($"route/directions/{RequiredParameters}&instructionsType=text&routeType=fastest&query={queryString}");
 
             return await ConvertResponseToObject<RouteDirectionsResult>(response);
         }
